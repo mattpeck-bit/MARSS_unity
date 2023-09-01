@@ -1,10 +1,14 @@
 # Unity Example for visualizing optical tracking data  
   
 This repository contains an example application for streaming and visualizing optical tracking data. The application comprises two essential components: a Unity client and a Python server. These components communicate via ROS2, facilitated by the [Unity-Technologies/ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector), which serves as a TCP-based communication framework. In this setup, the Python server runs on a laptop, acquiring tracking data from an optical tracking camera (SpryTrack) and streaming it to the Unity client, which operates on a HoloLens2 device.
- 
+
+
  # Usage
 
 Follow these steps to set up and run the Unity example:
+
+0. **Make sure you have a proper environment for developing HL2 application**
+   - If you have never developed a HL2 application of your PC, you could follow this tutorial https://learn.microsoft.com/en-us/training/paths/beginner-hololens-2-tutorials/
 
 1.  **Open the Project in Unity**
     
@@ -16,7 +20,7 @@ Follow these steps to set up and run the Unity example:
     -   Keep the `ROS Port` as 10000. Ensure this port value matches the configuration in the Python server.
 3.  **Build the Unity Application**
     
-    -   Configure the building settings as per the project requirements (specific settings not provided in the readme).
+    -   Configure the building settings as followed ![Drag Racing](Pictures/Unity%20building%20setting.png)
     -   Open the built result in Visual Studio and deploy it to the HoloLens2. Refer to the [Deployment tutorial](https://learn.microsoft.com/en-us/training/modules/learn-mrtk-tutorials/1-7-exercise-hand-interaction-with-objectmanipulator), starting from the section "Build your application in Unity" for detailed instructions.
 4.  **Start the Application**
     
