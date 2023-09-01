@@ -1,4 +1,4 @@
-# Unity Example for visualizing optical tracking data  
+# Example for visualizing optical tracking data  
   
 This repository contains an example application for streaming and visualizing optical tracking data. The application comprises two essential components: a Unity client and a Python server. These components communicate via ROS2, facilitated by the [Unity-Technologies/ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector), which serves as a TCP-based communication framework. In this setup, the Python server runs on a laptop, acquiring tracking data from an optical tracking camera (SpryTrack) and streaming it to the Unity client, which operates on a HoloLens2 device.
 
