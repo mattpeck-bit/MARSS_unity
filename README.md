@@ -3,12 +3,16 @@
 This repository contains an example application for streaming and visualizing optical tracking data. The application comprises two essential components: a Unity client and a Python server. These components communicate via ROS2, facilitated by the [Unity-Technologies/ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector), which serves as a TCP-based communication framework. In this setup, the Python server runs on a laptop, acquiring tracking data from an optical tracking camera (SpryTrack) and streaming it to the Unity client, which operates on a HoloLens2 device.
 
 
- # Usage
+
+## Requirements
+
+This application will run on HoloLens2. If you have no experience about building and deploying Unity project to HoloLens2, you can follow this tutorial [HoloLens 2 fundamentals: develop mixed reality applications - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/paths/beginner-hololens-2-tutorials/)
+
+
+ ## Usage
 
 Follow these steps to set up and run the Unity example:
 
-0. **Make sure you have a proper environment for developing HL2 application**
-   - If you have never developed a HL2 application of your PC, you could follow this tutorial https://learn.microsoft.com/en-us/training/paths/beginner-hololens-2-tutorials/
 
 1.  **Open the Project in Unity**
     
@@ -29,7 +33,7 @@ Follow these steps to set up and run the Unity example:
     -   It is crucial that when you start the Unity application, the HoloLens2 device is tracked by the SpryTrack. Allow a few seconds for the HoloLens2 to establish a connection between its coordinate system and the SpryTrack's coordinate system.
     -   As a best practice, place the HoloLens2 on a stable surface (e.g., a table) and initiate the app either from Visual Studio or the HoloLens2 device portal (can be opened by visiting HL2's IP via a browser on a laptop)
    
-# Game Objects
+## Game Objects
 
 Within the Unity project, you will encounter the following game objects:
 
@@ -42,4 +46,4 @@ Within the Unity project, you will encounter the following game objects:
 -   **TransformationManager:** Updates all objects' transformation information according to the tracking data from ROS.
     
 # Trouble Shooting
-Contact Luohong.wu@balgrist.ch
+If you have any questions or require further assistance, please do not hesitate to contact Luohong.wu@balgrist.ch. We are here to help you make the most of this example application.
