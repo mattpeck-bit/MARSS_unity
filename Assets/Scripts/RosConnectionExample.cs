@@ -13,21 +13,25 @@ public class RosConnectionExample : MonoBehaviour
     Texture2D texRos;
     public RawImage display;
     ROSConnection rosNode;
-    string webcamiagetopic = "US_images";
+    string imageTopic = "US_images";
 
     void Start()
     {
         // start the ROS connection
         rosNode = ROSConnection.GetOrCreateInstance();
 
-        rosNode.Subscribe<ImageMsg>(webcamiagetopic, displayImage);
+
+        // subscribe ultrasound images from Clara AGX
+        rosNode.Subscribe<ImageMsg>(imageTopic, displayImage);
+
+        // publish audios recorded by HoloLens2 to /audio, Clara AGX will fetch data from this topic
         rosNode.RegisterPublisher<RosMessageTypes.Std.ByteMultiArrayMsg>("audio");
 
 
     }
 
 
-
+    // The image message from ROS has different format as Unity, need some processing before displaying it.
     public void displayImage(ImageMsg img)
     {
 
@@ -39,6 +43,8 @@ public class RosConnectionExample : MonoBehaviour
         display.texture = texRos;
     }
 
+
+    // Python, Unity have different image conventions, just use this code
     public void BgrToRgb(byte[] data)
     {
         for (int i = 0; i < data.Length; i += 3)
@@ -49,6 +55,8 @@ public class RosConnectionExample : MonoBehaviour
         }
     }
 
+
+    // audio are published as byte array data
     public void publishBytes(byte[] data)
     {
         sbyte[] sdata = (sbyte[])(Array)data;
