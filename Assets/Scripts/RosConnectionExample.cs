@@ -13,15 +13,23 @@ public class RosConnectionExample : MonoBehaviour
     ROSConnection rosNode;
 
 
+    public RawImage display;
+    Texture2D texRos;
+    string imageTopic = "US_images";
+
     void Start()
     {
         // start the ROS connection
         rosNode = ROSConnection.GetOrCreateInstance();
 
+        // subscribe ultrasound images from Clara AGX
+        rosNode.Subscribe<ImageMsg>(imageTopic, displayImage);
+
 
 
         rosNode.Subscribe<RosMessageTypes.Std.Float32MultiArrayMsg>("Pelvis", CallbackPelvis);
         rosNode.Subscribe<RosMessageTypes.Std.Float32MultiArrayMsg>("HoloLens", CallbackHoloLens);
+        rosNode.Subscribe<RosMessageTypes.Std.Float32MultiArrayMsg>("Clarius", CallbackClarius);
 
 
     }
@@ -30,6 +38,11 @@ public class RosConnectionExample : MonoBehaviour
     void CallbackHoloLens(RosMessageTypes.Std.Float32MultiArrayMsg msg)
     {
         TransformationManager.HololensMarkerToSpryTrack = arrayToMatrix(msg.data);
+    }
+
+    void CallbackClarius(RosMessageTypes.Std.Float32MultiArrayMsg msg)
+    {
+        TransformationManager.ClariusToSpryTrack = arrayToMatrix(msg.data);
     }
 
 
@@ -50,4 +63,30 @@ public class RosConnectionExample : MonoBehaviour
         matrix[3, 0] = data[12]; matrix[3, 1] = data[13]; matrix[3, 2] = data[14]; matrix[3, 3] = data[15];
         return matrix;
     }
+
+
+    // The image message from ROS has different format as Unity, need some processing before displaying it.
+    public void displayImage(ImageMsg img)
+    {
+
+        texRos = new Texture2D((int)img.width, (int)img.height, TextureFormat.RGB24, false); // , TextureFormat.RGB24
+        BgrToRgb(img.data);
+        texRos.LoadRawTextureData(img.data);
+
+        texRos.Apply();
+        display.texture = texRos;
+    }
+
+
+    // Python, Unity have different image conventions, just use this code
+    public void BgrToRgb(byte[] data)
+    {
+        for (int i = 0; i < data.Length; i += 3)
+        {
+            byte dummy = data[i];
+            data[i] = data[i + 2];
+            data[i + 2] = dummy;
+        }
+    }
+
 }

@@ -69,6 +69,7 @@ public class TransformationManager : MonoBehaviour
     public static Matrix4x4 PelvisToSpryTrack;
     public static Matrix4x4 SawToSpryTrack;
     public static Matrix4x4 ArthrexToSpryTrack;
+    public static Matrix4x4 ClariusToSpryTrack;
     public static Matrix4x4 spryTrackToWorld = Matrix4x4.zero;
     public static bool spryTrackCalibrated = false;
 
@@ -101,8 +102,8 @@ public class TransformationManager : MonoBehaviour
         if (spryTrackCalibrated)
         {
             //UpdateFemur();
-            Debug.Log("Updateing models!!!!");
             UpdatePelvis();
+            UpdateClarius();
             //UpdateSaw();
             //UpdateArthrex();
         }
@@ -218,6 +219,34 @@ public class TransformationManager : MonoBehaviour
 
 
     }
+
+    void UpdateClarius()
+    {
+        //TransformationManager.FemurToSpryTrack = TransformationManager.idendity;
+        Transform target = GameObject.Find("Clarius").transform;
+        if (target == null)
+        {
+            Debug.LogWarning($"target {"Clarius"} not found");
+            return;
+        }
+
+        Matrix4x4 totalTransform = spryTrackToWorld * ClariusToSpryTrack * flipX;
+        //Debug.Log($"HololensMarkerToSpryTrack: \n {TransformationManager.HololensMarkerToSpryTrack}");
+        //Debug.Log($"pvToWorld: \n {TransformationManager.pvToWorld}");
+        //Debug.Log($"FemurToSpryTrack: \n {TransformationManager.FemurToSpryTrack}");
+        //Debug.Log("---------------------------------------------------------------------------------------------------------");
+
+        Vector3 position = totalTransform.GetColumn(3) / 1000f;
+        Quaternion rotation = Quaternion.LookRotation(totalTransform.GetColumn(2), totalTransform.GetColumn(1));
+        target.position = position;
+        target.rotation = rotation;
+
+        Debug.Log($"position of Pelvis: {position.ToString("f6")}, rotation : {rotation.ToString("f6")}\n");
+
+
+
+    }
+
 
     void UpdateFemur()
     {
