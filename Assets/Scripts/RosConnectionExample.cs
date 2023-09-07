@@ -30,11 +30,21 @@ public class RosConnectionExample : MonoBehaviour
         rosNode.Subscribe<RosMessageTypes.Std.Float32MultiArrayMsg>("Pelvis", CallbackPelvis);
         rosNode.Subscribe<RosMessageTypes.Std.Float32MultiArrayMsg>("HoloLens", CallbackHoloLens);
         rosNode.Subscribe<RosMessageTypes.Std.Float32MultiArrayMsg>("Clarius", CallbackClarius);
+        rosNode.Subscribe<RosMessageTypes.Std.StringMsg>("test2", CallbackTest);
+
+        
 
 
     }
 
-
+    private void Update()
+    {
+        //Debug.Log("123");
+    }
+    void CallbackTest(RosMessageTypes.Std.StringMsg msg)
+    {
+        Debug.Log(123);
+    }
     void CallbackHoloLens(RosMessageTypes.Std.Float32MultiArrayMsg msg)
     {
         TransformationManager.HololensMarkerToSpryTrack = arrayToMatrix(msg.data);

@@ -112,7 +112,7 @@ public class TransformationManager : MonoBehaviour
         string t_str = HololensToPV_t.ToString("F10");
         string r_str = HololensToPV_eulerAngle.ToString("F10");
 
-        Debug.Log($"HololensMarkerToPV, current t: {t_str}, current rotation: {r_str}");
+        //Debug.Log($"HololensMarkerToPV, current t: {t_str}, current rotation: {r_str}");
 
     }
         
@@ -132,12 +132,12 @@ public class TransformationManager : MonoBehaviour
     public static Matrix4x4 ComputeTransformationMatrix(Vector3 t, Vector3 euler)
     {
         //
-        Debug.Log($"Received euler.x= {euler.x}, euler.y= {euler.y}, euler.z={euler.z}\n ");
+        //Debug.Log($"Received euler.x= {euler.x}, euler.y= {euler.y}, euler.z={euler.z}\n ");
         Vector3 s = new Vector3(1, 1, 1);
         Quaternion q = Quaternion.Euler(euler);
 
-        Debug.Log($"converted quaternion: {q}\n ");
-        Debug.Log($"converted quaternion to angles: {q.eulerAngles}\n ");
+        //Debug.Log($"converted quaternion: {q}\n ");
+        //Debug.Log($"converted quaternion to angles: {q.eulerAngles}\n ");
         return Matrix4x4.TRS(t, q, s);
     }
 
