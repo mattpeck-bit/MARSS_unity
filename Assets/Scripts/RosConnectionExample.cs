@@ -79,15 +79,29 @@ public class RosConnectionExample : MonoBehaviour
     public void displayImage(ImageMsg img)
     {
 
+
+        
         texRos = new Texture2D((int)img.width, (int)img.height, TextureFormat.RGB24, false); // , TextureFormat.RGB24
-        BgrToRgb(img.data);
-        texRos.LoadRawTextureData(img.data);
+        //BgrToRgb(img.data);
+
+        // There is no grayScale format in TextureFormat, so have to make it RGB again. Perhaps there are other methods
+        texRos.LoadRawTextureData(gray2RGB(img.data));
 
         texRos.Apply();
         display.texture = texRos;
     }
 
-
+    public byte[] gray2RGB(byte[] data)
+    {
+        byte[] result=new byte[data.Length*3];
+        for (int i = 0; i < data.Length; i += 1)
+        {
+            result[i * 3] = data[i];
+            result[i * 3+1] = data[i];
+            result[i * 3+2] = data[i];
+        }
+        return result;
+    }
     // Python, Unity have different image conventions, just use this code
     public void BgrToRgb(byte[] data)
     {
