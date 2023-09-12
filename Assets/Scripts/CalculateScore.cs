@@ -9,7 +9,7 @@ public class CalculateScore : MonoBehaviour
     float level1TranslationError;
     float level2TranslationError;
     float level3TranslationError;
-    float totalTime;
+    public float totalTime;
 
     float finalScore;
     int level;
@@ -29,7 +29,7 @@ public class CalculateScore : MonoBehaviour
         level = 1;    
     }
 
-    void UpdateScore()
+    public void UpdateScore()
     {
         switch(level)
         {
@@ -63,9 +63,10 @@ public class CalculateScore : MonoBehaviour
             + Mathf.Pow(gtPosition.z - gtPosition.z, 2));
     }
 
-    void CalculateFinalScore()
+    public void CalculateFinalScore()
     {
         // calculate final score based on level 1,2 and 3 score
+        finalScore = (1/(level1TranslationError + level2TranslationError + level3TranslationError + totalTime))*100;
     }
 
     void WriteToHighScoreFile()
