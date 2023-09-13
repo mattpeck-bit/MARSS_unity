@@ -74,7 +74,9 @@ public class CalculateScore : MonoBehaviour
 
     void WriteToHighScoreFile()
     {
-        
+        scoreInstance scoreStorage = new scoreInstance { name = "sampleName", totalScore = finalScore, lvl1TE = level1TranslationError, lvl2TE = level2TranslationError, lvl3TE = level3TranslationError, time = totalTime };
+        XMLManager.instance.leaderboard.list.Add(scoreStorage);
+        XMLManager.instance.leaderboard.list.Sort((scoreInstance x, scoreInstance y) => y.totalScore.CompareTo(x.totalScore));
     }
 
    
