@@ -28,6 +28,7 @@ public class CalculateScore : MonoBehaviour
     Texture2D image1;
     Texture2D image2;
     Texture2D image3;
+    Texture2D image4;
 
     string nameToUse;
     // Start is called before the first frame update
@@ -35,21 +36,25 @@ public class CalculateScore : MonoBehaviour
     {
         // Start with level 1
         level = 1;
-        highScoreEnabled = true;
+        highScoreEnabled = false;
 
         // Load Images
         string filename1 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage1.png";
         string filename2 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage2.png";
         string filename3 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage3.png";
+        string filename4 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/Congratulations.png";
         var rawData1 = System.IO.File.ReadAllBytes(filename1);
         var rawData2 = System.IO.File.ReadAllBytes(filename2);
         var rawData3 = System.IO.File.ReadAllBytes(filename3);
+        var rawData4 = System.IO.File.ReadAllBytes(filename4);
         image1 = new Texture2D(640, 480);
         image2 = new Texture2D(640, 480);
         image3 = new Texture2D(640, 480);
+        image4 = new Texture2D(640, 480);
         image1.LoadImage(rawData1);
         image2.LoadImage(rawData2);
         image3.LoadImage(rawData3);
+        image4.LoadImage(rawData4);
 
         // Set Initial Reference Image
         referenceImage.GetComponent<RawImage>().texture = image1;
@@ -65,6 +70,7 @@ public class CalculateScore : MonoBehaviour
                 {
                     level1TranslationError = CalculateTranslationError(level1GTPose.transform.position, probeToPhantom.GetPosition());
                     referenceImage.GetComponent<RawImage>().texture = image2;
+                    Debug.Log("Upload image 2");
                     level++;
                     break;
                 }
@@ -79,6 +85,7 @@ public class CalculateScore : MonoBehaviour
                 {
                     level3TranslationError = CalculateTranslationError(level3GTPose.transform.position, probeToPhantom.GetPosition());
                     level = 1;
+                    referenceImage.GetComponent<RawImage>().texture = image4;
                     CalculateFinalScore();
                     if (highScoreEnabled)
                     {
