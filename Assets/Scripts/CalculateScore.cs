@@ -14,7 +14,8 @@ public class CalculateScore : MonoBehaviour
     float finalScore;
     int level;
 
-    public GameObject probePose;
+    public GameObject probeTarget;
+    public GameObject phantomTarget;
 
     public GameObject level1GTPose;
     public GameObject level2GTPose;
@@ -31,23 +32,25 @@ public class CalculateScore : MonoBehaviour
 
     public void UpdateScore()
     {
-        switch(level)
+        Matrix4x4 probeToPhantom = phantomTarget.transform.localToWorldMatrix.inverse * probeTarget.transform.localToWorldMatrix;
+
+        switch (level)
         {
             case 1:
             {
-                level1TranslationError = CalculateTranslationError(level1GTPose.transform.position, probePose.transform.position);
+                level1TranslationError = CalculateTranslationError(level1GTPose.transform.position, probeToPhantom.GetPosition());
                 level++;
                 break;
             }
             case 2:
             {
-                level2TranslationError = CalculateTranslationError(level2GTPose.transform.position, probePose.transform.position);
+                level2TranslationError = CalculateTranslationError(level2GTPose.transform.position, probeToPhantom.GetPosition());
                 level++;
                 break;
             }
             case 3:
             {
-                level3TranslationError = CalculateTranslationError(level3GTPose.transform.position, probePose.transform.position);
+                level3TranslationError = CalculateTranslationError(level3GTPose.transform.position, probeToPhantom.GetPosition());
                 level = 1;
                 CalculateFinalScore();
                 WriteToHighScoreFile();
