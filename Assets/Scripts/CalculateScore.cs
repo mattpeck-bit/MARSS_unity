@@ -21,8 +21,8 @@ public class CalculateScore : MonoBehaviour
     public GameObject level2GTPose;
     public GameObject level3GTPose;
 
-    
 
+    string nameToUse;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +74,7 @@ public class CalculateScore : MonoBehaviour
 
     void WriteToHighScoreFile()
     {
-        scoreInstance scoreStorage = new scoreInstance { name = "sampleName", totalScore = finalScore, lvl1TE = level1TranslationError, lvl2TE = level2TranslationError, lvl3TE = level3TranslationError, time = totalTime };
+        scoreInstance scoreStorage = new scoreInstance { name = nameToUse, totalScore = finalScore, lvl1TE = level1TranslationError, lvl2TE = level2TranslationError, lvl3TE = level3TranslationError, time = totalTime };
         XMLManager.instance.leaderboard.list.Add(scoreStorage);
         XMLManager.instance.leaderboard.list.Sort((scoreInstance x, scoreInstance y) => y.totalScore.CompareTo(x.totalScore));
     }
