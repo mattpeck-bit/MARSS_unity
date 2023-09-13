@@ -6,7 +6,7 @@ using TMPro;
 public class TutorialManager : MonoBehaviour
 {
 
-    public TextMeshPro tutText;
+    public TextMeshPro tutText, theTitle;
     int stage;
     string[] tutScript = { "Hi, I’m Blocky, and welcome to my ultrasound training application! Thank you for taking the time to try my service.",
         "Let’s start with something simple. If you’re using my application, you should have an ultrasound probe somewhere around you. Try picking it up now, and make sure to keep it in view.",
@@ -70,5 +70,6 @@ public class TutorialManager : MonoBehaviour
     void UpdateMenu(int whatStage)
     {
         tutText.text = tutScript[whatStage];
+        theTitle.text = titleTexts[whatStage];
     }
 }
