@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Called by the UI to update users score for each level
 // and calculate final score after all levels completed
@@ -9,10 +10,13 @@ public class CalculateScore : MonoBehaviour
     float level1TranslationError;
     float level2TranslationError;
     float level3TranslationError;
-    public float totalTime;
 
+    public float totalTime;
     float finalScore;
     int level;
+    bool highScoreEnabled;
+
+    public GameObject referenceImage;
 
     public GameObject probeTarget;
     public GameObject phantomTarget;
@@ -21,13 +25,34 @@ public class CalculateScore : MonoBehaviour
     public GameObject level2GTPose;
     public GameObject level3GTPose;
 
+    Texture2D image1;
+    Texture2D image2;
+    Texture2D image3;
 
     string nameToUse;
     // Start is called before the first frame update
     void Start()
     {
         // Start with level 1
-        level = 1;    
+        level = 1;
+        highScoreEnabled = true;
+
+        // Load Images
+        string filename1 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage1.png";
+        string filename2 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage2.png";
+        string filename3 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage3.png";
+        var rawData1 = System.IO.File.ReadAllBytes(filename1);
+        var rawData2 = System.IO.File.ReadAllBytes(filename2);
+        var rawData3 = System.IO.File.ReadAllBytes(filename3);
+        image1 = new Texture2D(640, 480);
+        image2 = new Texture2D(640, 480);
+        image3 = new Texture2D(640, 480);
+        image1.LoadImage(rawData1);
+        image2.LoadImage(rawData2);
+        image3.LoadImage(rawData3);
+
+        // Set Initial Reference Image
+        referenceImage.GetComponent<RawImage>().texture = image1;
     }
 
     public void UpdateScore()
@@ -37,39 +62,45 @@ public class CalculateScore : MonoBehaviour
         switch (level)
         {
             case 1:
-            {
-                level1TranslationError = CalculateTranslationError(level1GTPose.transform.position, probeToPhantom.GetPosition());
-                level++;
-                break;
-            }
+                {
+                    level1TranslationError = CalculateTranslationError(level1GTPose.transform.position, probeToPhantom.GetPosition());
+                    referenceImage.GetComponent<RawImage>().texture = image2;
+                    level++;
+                    break;
+                }
             case 2:
-            {
-                level2TranslationError = CalculateTranslationError(level2GTPose.transform.position, probeToPhantom.GetPosition());
-                level++;
-                break;
-            }
+                {
+                    level2TranslationError = CalculateTranslationError(level2GTPose.transform.position, probeToPhantom.GetPosition());
+                    referenceImage.GetComponent<RawImage>().texture = image3;
+                    level++;
+                    break;
+                }
             case 3:
-            {
-                level3TranslationError = CalculateTranslationError(level3GTPose.transform.position, probeToPhantom.GetPosition());
-                level = 1;
-                CalculateFinalScore();
-                WriteToHighScoreFile();
-                break;
-            }
+                {
+                    level3TranslationError = CalculateTranslationError(level3GTPose.transform.position, probeToPhantom.GetPosition());
+                    level = 1;
+                    CalculateFinalScore();
+                    if (highScoreEnabled)
+                    {
+                        WriteToHighScoreFile();
+                    }
+
+                    break;
+                }
         }
     }
 
     float CalculateTranslationError(Vector3 gtPosition, Vector3 probePosition)
     {
-        return Mathf.Sqrt(Mathf.Pow(gtPosition.x - probePosition.x, 2) 
-            + Mathf.Pow(gtPosition.y - probePosition.y, 2) 
+        return Mathf.Sqrt(Mathf.Pow(gtPosition.x - probePosition.x, 2)
+            + Mathf.Pow(gtPosition.y - probePosition.y, 2)
             + Mathf.Pow(gtPosition.z - gtPosition.z, 2));
     }
 
     public void CalculateFinalScore()
     {
         // calculate final score based on level 1,2 and 3 score
-        finalScore = (1/(level1TranslationError + level2TranslationError + level3TranslationError + totalTime))*100;
+        finalScore = (1 / (level1TranslationError + level2TranslationError + level3TranslationError + totalTime)) * 100;
     }
 
     void WriteToHighScoreFile()
@@ -79,5 +110,5 @@ public class CalculateScore : MonoBehaviour
         XMLManager.instance.leaderboard.list.Sort((scoreInstance x, scoreInstance y) => y.totalScore.CompareTo(x.totalScore));
     }
 
-   
+
 }
