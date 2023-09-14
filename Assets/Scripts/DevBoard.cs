@@ -21,7 +21,7 @@ public class DevBoard : MonoBehaviour
 
     public void GenDummyData()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             ScoreInstance scoreStorage = new ScoreInstance { name = names[Random.Range(0,names.Length)], totalScore = Random.Range(0.0f,100.0f), lvl1TE = Random.Range(0.0f, 100.0f), lvl2TE = Random.Range(0.0f, 100.0f), lvl3TE = Random.Range(0.0f, 100.0f), time = Random.Range(0.0f, 100.0f) };
             XMLManager.instance.leaderboard.list.Add(scoreStorage);

@@ -20,11 +20,11 @@ public class PopulateScore : MonoBehaviour
 
     public void Populate(ScoreInstance useThisScore, int theRank)
     {
-        Rank.text = theRank.ToString();
+        Rank.text = theRank.ToString() + ")";
         Name.text = useThisScore.name;
-        UserScore.text = useThisScore.totalScore.ToString();
+        UserScore.text = useThisScore.totalScore.ToString("F2");
         float tempNum = useThisScore.lvl1TE + useThisScore.lvl2TE + useThisScore.lvl3TE;
-        UserOffset.text = tempNum.ToString();
-        UserTime.text = useThisScore.time.ToString();
+        UserOffset.text = tempNum.ToString("F2");
+        UserTime.text = useThisScore.time.ToString("F2");
     }
 }
