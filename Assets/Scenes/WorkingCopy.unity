@@ -26173,6 +26173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8bd58f37ce1974fafc83246a5551a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  calculationObject: {fileID: 0}
 --- !u!1 &1069404023
 GameObject:
   m_ObjectHideFlags: 0
@@ -38289,6 +38290,7 @@ MonoBehaviour:
   level1GTPose: {fileID: 1094470997}
   level2GTPose: {fileID: 1975900314}
   level3GTPose: {fileID: 1894266045}
+  nameToUse: 
 --- !u!4 &1621226684
 Transform:
   m_ObjectHideFlags: 0
