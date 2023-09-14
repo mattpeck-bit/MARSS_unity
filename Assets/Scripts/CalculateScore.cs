@@ -39,7 +39,7 @@ public class CalculateScore : MonoBehaviour
         level = 1;
         highScoreEnabled = false;
 
-        // Load Images
+        // Load Images: NOTE THAT THESE FILE PATHS ARE ABSOLUTE AND THEREFORE MAY NOT WORK ON ALL BUILDS
         string filename1 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage1.png";
         string filename2 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage2.png";
         string filename3 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage3.png";
