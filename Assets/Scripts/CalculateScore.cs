@@ -29,6 +29,7 @@ public class CalculateScore : MonoBehaviour
     Texture2D image2;
     Texture2D image3;
     Texture2D image4;
+    Texture2D image5;
 
     public string nameToUse;
     // Start is called before the first frame update
@@ -43,21 +44,25 @@ public class CalculateScore : MonoBehaviour
         string filename2 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage2.png";
         string filename3 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/groundTruthImage3.png";
         string filename4 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/Congratulations.png";
+        string filename5 = "C:/d/UnityProjects/MARSS_Unity/Assets/Resources/StartTrial.png";
         var rawData1 = System.IO.File.ReadAllBytes(filename1);
         var rawData2 = System.IO.File.ReadAllBytes(filename2);
         var rawData3 = System.IO.File.ReadAllBytes(filename3);
         var rawData4 = System.IO.File.ReadAllBytes(filename4);
+        var rawData5 = System.IO.File.ReadAllBytes(filename5);
         image1 = new Texture2D(640, 480);
         image2 = new Texture2D(640, 480);
         image3 = new Texture2D(640, 480);
         image4 = new Texture2D(640, 480);
+        image5 = new Texture2D(640, 480);
         image1.LoadImage(rawData1);
         image2.LoadImage(rawData2);
         image3.LoadImage(rawData3);
         image4.LoadImage(rawData4);
+        image4.LoadImage(rawData5);
 
         // Set Initial Reference Image
-        referenceImage.GetComponent<RawImage>().texture = image1;
+        //referenceImage.GetComponent<RawImage>().texture = image1;
     }
 
     public void UpdateScore()
@@ -78,6 +83,7 @@ public class CalculateScore : MonoBehaviour
                 {
                     level2TranslationError = CalculateTranslationError(level2GTPose.transform.position, probeToPhantom.GetPosition());
                     referenceImage.GetComponent<RawImage>().texture = image3;
+                    Debug.Log("Upload image 3");
                     level++;
                     break;
                 }
@@ -86,6 +92,7 @@ public class CalculateScore : MonoBehaviour
                     level3TranslationError = CalculateTranslationError(level3GTPose.transform.position, probeToPhantom.GetPosition());
                     level = 1;
                     referenceImage.GetComponent<RawImage>().texture = image4;
+                    Debug.Log("Upload image 4");
                     CalculateFinalScore();
                     if (highScoreEnabled)
                     {
@@ -112,9 +119,9 @@ public class CalculateScore : MonoBehaviour
 
     void WriteToHighScoreFile()
     {
-        scoreInstance scoreStorage = new scoreInstance { name = nameToUse, totalScore = finalScore, lvl1TE = level1TranslationError, lvl2TE = level2TranslationError, lvl3TE = level3TranslationError, time = totalTime };
+        ScoreInstance scoreStorage = new ScoreInstance { name = nameToUse, totalScore = finalScore, lvl1TE = level1TranslationError, lvl2TE = level2TranslationError, lvl3TE = level3TranslationError, time = totalTime };
         XMLManager.instance.leaderboard.list.Add(scoreStorage);
-        XMLManager.instance.leaderboard.list.Sort((scoreInstance x, scoreInstance y) => y.totalScore.CompareTo(x.totalScore));
+        XMLManager.instance.leaderboard.list.Sort((ScoreInstance x, ScoreInstance y) => y.totalScore.CompareTo(x.totalScore));
     }
 
 

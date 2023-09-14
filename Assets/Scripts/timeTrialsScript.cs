@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class timeTrials : MonoBehaviour
+public class TimeTrialsScript : MonoBehaviour
 {
 
     public float timerTime;
     public bool timerControl;
     public TextMeshPro timerText;
+    public GameObject startImage;
+
     // Start is called before the first frame update
     void Start()
     {

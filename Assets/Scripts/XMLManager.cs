@@ -18,7 +18,7 @@ public class XMLManager : MonoBehaviour
         }
     }
 
-    public void SaveScores(List<scoreInstance> scoresToSave)
+    public void SaveScores(List<ScoreInstance> scoresToSave)
     {
         leaderboard.list = scoresToSave;
         XmlSerializer serializer = new XmlSerializer(typeof(Leaderboard));
@@ -27,7 +27,7 @@ public class XMLManager : MonoBehaviour
         stream.Close();
     }
 
-    public List<scoreInstance> LoadScores()
+    public List<ScoreInstance> LoadScores()
     {
         if(File.Exists(Application.persistentDataPath + "/HighScores/highscores.xml"))
         {
@@ -42,5 +42,5 @@ public class XMLManager : MonoBehaviour
 [System.Serializable]
 public class Leaderboard
 {
-    public List<scoreInstance> list = new List<scoreInstance>();
+    public List<ScoreInstance> list = new List<ScoreInstance>();
 }
