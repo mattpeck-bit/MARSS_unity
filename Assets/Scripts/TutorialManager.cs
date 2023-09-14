@@ -7,10 +7,11 @@ public class TutorialManager : MonoBehaviour
 {
 
     public TextMeshPro tutText, theTitle;
+    public GameObject usefulButton;
     int stage;
     string[] tutScript = { "Hi, I’m Blocky, and welcome to my ultrasound training application! Thank you for taking the time to try my service.",
         "Let’s start with something simple. If you’re using my application, you should have an ultrasound probe somewhere around you. Try picking it up now, and make sure to keep it in view.",
-        "Take a second and try using the probe on your arm if you’d like. You may need to apply some pressure, but you should be able to see a view of the inside of your arm. Let me know when you’re ready to move on.," +
+        "Take a second and try using the probe on your arm if you’d like. You may need to apply some pressure, but you should be able to see a view of the inside of your arm. Let me know when you’re ready to move on.",
         "Ultrasound is pretty fascinating, but it can be difficult to understand what exactly you’re seeing right away. Thankfully, my anatomy is a little more straightforward than the human body. If you haven’t already found me, make sure I’m in view now and we can formally meet each other.",
         "Alright, now that we’ve met, let’s get to work. Try using the probe on my semi-cylinder organ. Se if you can find any injuries it might have sustained recently.",
         "Thank you! I’ll have to make sure to go get that checked out. While I have you here, would you mind taking a look at my triangle organ? It should be close by. I’m feeling some pain there and I’m worried whatever hurt my semi-cylinder may have also hurt that too.",
@@ -31,7 +32,7 @@ public class TutorialManager : MonoBehaviour
 
     void CheckStatus()
     {
-        switch (stage)
+        /*switch (stage)
         {
             case 0:
                 //Check if the start button has been pressed
@@ -56,14 +57,18 @@ public class TutorialManager : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     public void MoveOn()
     {
-        if (stage < 8) { 
+        if (stage < 7) { 
             stage++;
             UpdateMenu(stage);
+        }
+        else
+        {
+            usefulButton.SetActive(false);
         }
     }
 
