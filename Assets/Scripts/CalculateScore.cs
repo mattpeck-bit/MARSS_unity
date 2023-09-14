@@ -30,7 +30,7 @@ public class CalculateScore : MonoBehaviour
     Texture2D image3;
     Texture2D image4;
 
-    string nameToUse;
+    public string nameToUse;
     // Start is called before the first frame update
     void Start()
     {
